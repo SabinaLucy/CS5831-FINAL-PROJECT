@@ -1,0 +1,86 @@
+new_column,original_topic,original_question
+alc__alcohol_hs,Alcohol,Alcohol use among high school students
+alc__binge_adult,Alcohol,Binge drinking prevalence among adults
+alc__binge_hs,Alcohol,Binge drinking prevalence among high school students
+arth__activity_limit_arth,Arthritis,Activity limitation due to arthritis among adults with arthritis
+arth__arth_adult,Arthritis,Arthritis among adults
+arth__self_mgmt_class_arth,Arthritis,Have taken an educational class to learn how to manage arthritis symptoms among adults with arthritis
+arth__inactive_arth,Arthritis,Physical inactivity among adults with arthritis
+arth__pa_counsel_arth,Arthritis,Received health care provider counseling for physical activity among adults with arthritis
+arth__severe_joint_pain_arth,Arthritis,Severe joint pain among adults with arthritis
+arth__work_limit_arth_18_64,Arthritis,Work limitation due to arthritis among adults aged 18-64 years with arthritis
+asth__asthma_adult,Asthma,Current asthma among adults
+can__screen_cervical_w21_65,Cancer,Cervical cancer screening among women aged 21-65 years
+can__screen_colorectal_45_75,Cancer,Colorectal cancer screening among adults aged 45-75 years
+can__mammo_w50_74,Cancer,Mammography use among women aged 50-74 years
+cvd__hbp_adult,Cardiovascular Disease,High blood pressure among adults
+cvd__high_chol_screened_adult,Cardiovascular Disease,High cholesterol among adults who have been screened
+cvd__med_high_chol_adult,Cardiovascular Disease,Taking medicine for high cholesterol among adults
+cvd__med_hbp_adult,Cardiovascular Disease,Taking medicine to control high blood pressure among adults with high blood pressure
+copd__copd_adult,Chronic Obstructive Pulmonary Disease,Chronic obstructive pulmonary disease among adults
+copd__smoking_copd_adult,Chronic Obstructive Pulmonary Disease,Current smoking among adults with chronic obstructive pulmonary disease
+cog__scd_discussed_hcp_45plus,Cognitive Health and Caregiving,Discussed symptoms of subjective cognitive decline with a health care professional among adults aged 45 years and older with subjective cognitive decline
+cog__caregiver_friend_family_adult,Cognitive Health and Caregiving,Provided care for a friend or family member in the past month among adults
+cog__caregiver_dementia_adult,Cognitive Health and Caregiving,Provided care for someone with dementia or other cognitive impairment in the past month among adults
+cog__scd_45plus,Cognitive Health and Caregiving,Subjective cognitive decline among adults aged 45 years and older
+dm__diabetes_adult,Diabetes,Diabetes among adults
+dm__gest_diabetes_recent_birth,Diabetes,Gestational diabetes among women with a recent live birth
+dis__any_disability_adult,Disability,Adults with any disability
+hs__chronic2plus_adult,Health Status,2 or more chronic conditions among adults
+hs__fair_poor_health_adult,Health Status,Fair or poor self-rated health status among adults
+hs__phys_distress_freq_adult,Health Status,Frequent physical distress among adults
+imm__flu_vax_adult,Immunization,Influenza vaccination among adults
+imm__flu_vax_risk_18_64,Immunization,Influenza vaccination among adults 18â€“64 who are at increased risk
+imm__pneumo_vax_risk_18_64,Immunization,Pneumococcal vaccination among adults aged 18â€“64 years who are at increased risk
+imm__pneumo_vax_65plus,Immunization,Pneumococcal vaccination among adults aged 65 years and older
+state_abbr,LocationAbbr,
+state_name,LocationDesc,
+mat__postpartum_check_recent_birth,Maternal Health,Postpartum checkup among women with a recent live birth
+mh__poor_mh_hs,Mental Health,Current poor mental health among high school students
+mh__depression_adult,Mental Health,Depression among adults
+mh__mental_distress_freq_adult,Mental Health,Frequent mental distress among adults
+mh__postpartum_depr_recent_birth,Mental Health,Postpartum depressive symptoms among women with a recent live birth
+npaw__pa_guideline_6_13,"Nutrition, Physical Activity, and Weight Status",Children and adolescents aged 6-13 years meeting aerobic physical activity guideline
+npaw__fruit_lt1_daily_adult,"Nutrition, Physical Activity, and Weight Status",Consumed fruit less than one time daily among adults
+npaw__fruit_lt1_daily_hs,"Nutrition, Physical Activity, and Weight Status",Consumed fruit less than one time daily among high school students
+npaw__soda_ge1_daily_hs,"Nutrition, Physical Activity, and Weight Status",Consumed regular soda at least one time daily among high school students
+npaw__veg_lt1_daily_adult,"Nutrition, Physical Activity, and Weight Status",Consumed vegetables less than one time daily among adults
+npaw__veg_lt1_daily_hs,"Nutrition, Physical Activity, and Weight Status",Consumed vegetables less than one time daily among high school students
+npaw__breastfed_12m,"Nutrition, Physical Activity, and Weight Status",Infants who were breastfed at 12 months
+npaw__exclusive_breastfed_6m,"Nutrition, Physical Activity, and Weight Status",Infants who were exclusively breastfed through 6 months
+npaw__pa_guideline_hs,"Nutrition, Physical Activity, and Weight Status",Met aerobic physical activity guideline among high school students
+npaw__pa_guideline_adult,"Nutrition, Physical Activity, and Weight Status","Met aerobic physical activity guideline for substantial health benefits, adults"
+npaw__no_leisure_pa_adult,"Nutrition, Physical Activity, and Weight Status",No leisure-time physical activity among adults
+npaw__obesity_wic_2_4,"Nutrition, Physical Activity, and Weight Status",Obesity among WIC children aged 2 to 4 years
+npaw__obesity_adult,"Nutrition, Physical Activity, and Weight Status",Obesity among adults
+npaw__obesity_hs,"Nutrition, Physical Activity, and Weight Status",Obesity among high school students
+oral__all_teeth_lost_65plus,Oral Health,All teeth lost among adults aged 65 years and older
+oral__no_teeth_lost_18_64,Oral Health,No teeth lost among adults aged 18-64 years
+oral__prev_dental_pre_preg_recent_birth,Oral Health,Preventive dental care in the 12 months before pregnancy among women with a recent live birth
+oral__prev_dental_child_1_17,Oral Health,Receipt of evidence-based preventive dental services in the past 12 months among children and adolescents aged 1-17 years
+oral__teeth_lost_6plus_65plus,Oral Health,Six or more teeth lost among adults aged 65 years and older
+oral__dentist_visit_past_year_adult,Oral Health,Visited dentist or dental clinic in the past year among adults
+oral__dentist_visit_child_1_17,Oral Health,Visited dentist or other oral health care provider in the past 12 months among children and adolescents aged 1-17 years
+sleep__short_sleep_adult,Sleep,Short sleep duration among adults
+sleep__short_sleep_child_4m_14y,Sleep,Short sleep duration among children aged 4 months to 14 years
+sleep__short_sleep_hs,Sleep,Short sleep duration among high school students
+sdoh__food_insecure_household,Social Determinants of Health,Food insecure in the past 12 months among households
+sdoh__ins_after_preg_recent_birth,Social Determinants of Health,Health insurance coverage after pregnancy among women with a recent live birth
+sdoh__ins_before_preg_recent_birth,Social Determinants of Health,Health insurance coverage in the month before pregnancy among women with a recent live birth
+sdoh__hs_completion_18_24,Social Determinants of Health,High school completion among adults aged 18-24
+sdoh__no_ins_18_64,Social Determinants of Health,Lack of health insurance among adults aged 18-64 years
+sdoh__no_transport_adult,Social Determinants of Health,Lack of reliable transportation in the past 12 months among adults
+sdoh__no_social_emotional_support_adult,Social Determinants of Health,Lack of social and emotional support needed among adults
+sdoh__poverty_lt150_all,Social Determinants of Health,Living below 150% of the poverty threshold among all people
+sdoh__no_broadband_household,Social Determinants of Health,No broadband internet subscription among households
+sdoh__routine_checkup_adult,Social Determinants of Health,Routine checkup within the past year among adults
+sdoh__housing_utility_payment_issue_adult,Social Determinants of Health,"Unable to pay mortgage, rent, or utility bills in the past 12 months among adults"
+sdoh__unemployment_16plus_lf,Social Determinants of Health,Unemployment rate among people 16 years and older in the labor force
+tob__smoking_preg_recent_birth,Tobacco,Cigarette smoking during pregnancy among women with a recent live birth
+tob__cig_smoking_adult,Tobacco,Current cigarette smoking among adults
+tob__vape_hs,Tobacco,Current electronic vapor product use among high school students
+tob__smokeless_hs,Tobacco,Current smokeless tobacco use among high school students
+tob__any_tobacco_hs,Tobacco,Current tobacco use of any tobacco product among high school students
+tob__quit_attempt_adult_smokers,Tobacco,Quit attempts in the past year among adult current smokers
+yr_end,YearEnd,
+yr_start,YearStart,
