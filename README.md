@@ -91,8 +91,8 @@ The notebook was developed using Python 3.10 in a conda environment (`dmsp26`) a
 1. Download the dataset from the [CDC portal](https://catalog.data.gov/dataset/u-s-chronic-disease-indicators) and place it in the same directory as the notebook as `U.S._Chronic_Disease_Indicators.csv`
 2. Clone this repository:
 ```bash
-git clone https://github.com/<your-repo-url>.git
-cd <repo-folder>
+git clone https://github.com/SabinaLucy/CS5831-FINAL-PROJECT.git
+cd CS5831-FINAL-PROJECT
 ```
 3. Launch JupyterLab and open `CS5831_FinalProject_.ipynb`
 4. Run all cells top to bottom
@@ -116,5 +116,4 @@ cd <repo-folder>
 ---
 
 *Michigan Technological University — CS5831 Data Mining — Spring 2026*
-```
 
