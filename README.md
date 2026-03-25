@@ -1,5 +1,5 @@
 # Chronic Disease Risk Profiling Using Data Mining
-### CS5831 — Final Project | Group GR-1
+### CS5831 - Final Project | Group GR-1
 
 **Members:** Sabina Bimbi · Ali Mansouri · Terence Mpofu · Lydia Tembreull  
 **Dataset:** [CDC U.S. Chronic Disease Indicators (CDI)](https://catalog.data.gov/dataset/u-s-chronic-disease-indicators)
@@ -35,16 +35,24 @@ Chronic diseases are a leading cause of morbidity and mortality in the United St
 - Filtered to `Crude Prevalence` indicators for cross-state comparability
 - Reshaped from long to wide format via pivot table
 - Renamed columns with structured abbreviations (see `column_abbreviation_guide.csv`)
-- Imputed missing values using column-wise median
+- Applied **group-wise KNN imputation (k=5)** per `(yr_start, yr_end)` time window — only applied to indicators with less than 30% missing values to avoid unreliable imputation; higher-missingness indicators were left as-is
 - Applied Z-score normalization via `StandardScaler`
 
-### 2. Target Variable Engineering
+### 2. Aggregation Strategy
+Two parallel analytical views were constructed after imputation:
+
+| View | Description |
+|------|-------------|
+| **Year-specific** | Analysis performed separately per `(yr_start, yr_end)` group, preserving temporal structure |
+| **Aggregated (all-time)** | State-level averages across all time windows for a global view; light mean imputation applied post-aggregation for any remaining missingness |
+
+### 3. Target Variable Engineering
 - Constructed a **composite chronic disease burden score** by averaging normalized indicator values per observation
 - Applied a **75th percentile threshold** to assign binary labels: `1 = High-Risk`, `0 = Low-Risk`
 - Result: 119 high-risk and 357 low-risk observations
 
-### 3. Supervised Classification
-Four models were trained and evaluated using stratified 5-fold cross-validation and an 80/20 train-test split:
+### 4. Supervised Classification
+Four models were trained and evaluated using stratified 5-fold cross-validation and an 80/20 stratified train-test split:
 
 | Model | Notes |
 |-------|-------|
@@ -55,23 +63,33 @@ Four models were trained and evaluated using stratified 5-fold cross-validation 
 
 **Evaluation metrics:** Accuracy, Precision, Recall, F1-Score, ROC-AUC
 
-### 4. Unsupervised Clustering
-Two clustering methods were applied to the full scaled feature matrix:
+### 5. Unsupervised Clustering
+K-Means and DBSCAN were applied under both analytical views:
 
-| Method | Result |
-|--------|--------|
-| K-Means | Optimal k=2 via silhouette score · Silhouette: 0.3940 · Davies-Bouldin: 2.4395 |
-| DBSCAN | 3 clusters · 252 noise points · Silhouette: 0.3185 · Davies-Bouldin: 0.7540 |
+**Year-specific clustering** — run independently per time window:
+- PCA dimensionality reduction per group (after dropping remaining NaNs)
+- K-Means with elbow method and silhouette-based k selection
+- DBSCAN with grid search over epsilon and min_samples
 
-Clusters were visualized via PCA 2D projection and profiled by their top variable indicators.
+**Aggregated clustering** — run on the all-time state-level dataset:
+- PCA on the aggregated feature matrix
+- K-Means with option for manual k override (auto-selection sometimes favored large k due to marginal silhouette differences)
+- DBSCAN with parameter sweep
+
+**Internal validation metrics:** Silhouette Score, Davies-Bouldin Index  
+**Visualization:** PCA 2D projection with ground truth risk label comparison panel  
+**Profiling:** Heatmap of top variable indicators across K-Means clusters
 
 ---
 
 ## Repository Structure
 ```
-├── CS5831_FinalProject_.ipynb     # Main analysis notebook
-├── column_abbreviation_guide.csv  # Mapping of abbreviated to original column names
-├── U.S._Chronic_Disease_Indicators.csv  # Raw dataset (not tracked — download separately)
+├── CS5831_FinalProject .ipynb          # Main analysis notebook
+├── column_abbreviation_guide.csv       # Mapping of abbreviated to original column names
+├── pivoted_df2.csv                     # Pivoted Crude Prevalence dataset
+├── clean_df.csv                        # KNN-imputed cleaned dataset
+├── clean_df_alltime_processed.csv      # Aggregated all-time processed dataset
+├── U.S._Chronic_Disease_Indicators.csv # Raw dataset (not tracked — download separately)
 └── README.md
 ```
 
@@ -94,7 +112,7 @@ The notebook was developed using Python 3.10 in a conda environment (`dmsp26`) a
 git clone https://github.com/SabinaLucy/CS5831-FINAL-PROJECT.git
 cd CS5831-FINAL-PROJECT
 ```
-3. Launch JupyterLab and open `CS5831_FinalProject_.ipynb`
+3. Launch JupyterLab and open `CS5831_FinalProject .ipynb`
 4. Run all cells top to bottom
 
 ---
@@ -104,7 +122,8 @@ cd CS5831-FINAL-PROJECT
 - **West Virginia (2019)** had the highest composite burden score (0.864), followed by Kentucky and Mississippi
 - **Top predictors** of high-risk classification: lack of broadband access, COPD smoking rate, fair/poor self-rated health, physical inactivity, and poor diet indicators
 - **Random Forest and XGBoost** were the best-performing classifiers based on ROC-AUC
-- **K-Means (k=2)** produced more interpretable clusters than DBSCAN, which flagged over 50% of observations as noise — consistent with the diffuse, high-dimensional nature of the data
+- **KNN imputation grouped by time window** produced a more stable and statistically reliable dataset compared to global median imputation
+- **K-Means** produced more interpretable clusters than DBSCAN across both temporal and aggregated views; DBSCAN flagged a large proportion of observations as noise, consistent with the diffuse high-dimensional structure of the data
 
 ---
 
@@ -115,5 +134,4 @@ cd CS5831-FINAL-PROJECT
 
 ---
 
-*Michigan Technological University — CS5831 Data Mining — Spring 2026*
-
+*Michigan Technological University — CS5831 Data Mining — Spring 2026* 
