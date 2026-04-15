@@ -8,73 +8,60 @@
 
 ## Overview
 
-This project applies data mining techniques to the CDC U.S. Chronic Disease Indicators (CDI) dataset to identify and predict high-risk states based on chronic disease prevalence patterns. The dataset contains approximately 300,000 observations across 115 standardized public health indicators reported at the U.S. state level over multiple years.
+This project applies data mining techniques to the CDC U.S. Chronic Disease Indicators (CDI) dataset to identify and predict high-risk states based on chronic disease prevalence patterns. The raw dataset contains over 300,000 observations across standardized public health indicators reported at the U.S. state level.
 
-The project is framed as a mixed data mining problem combining **supervised classification** and **unsupervised clustering** to uncover geographic and temporal disparities in chronic disease burden across the United States.
+The project is framed as a mixed data mining problem combining **supervised classification** and **unsupervised clustering** to uncover geographic disparities in chronic disease burden across the United States.
 
 ---
 
 ## Problem Statement
 
-Chronic diseases are a leading cause of morbidity and mortality in the United States, with significant variation between states and demographic groups. Rather than simply reporting statistics, this project builds predictive models to identify which states are at high risk and which indicators drive that risk — supporting better-informed public health interventions and resource allocation.
+Chronic diseases are a leading cause of morbidity and mortality in the United States, with significant variation between states. Rather than simply reporting statistics, this project builds predictive models to identify which states fall into different risk tiers and which indicators drive that risk — supporting better-informed public health interventions and resource allocation.
 
 ---
 
 ## Dataset
 
 - **Source:** CDC U.S. Chronic Disease Indicators (updated February 3, 2025)
-- **Size:** ~300,000 observations × 34 columns (long format)
-- **Coverage:** U.S. states and territories, multiple years, stratified by sex and race/ethnicity
-- **Selected subset:** `Crude Prevalence` data type → 476 state-year observations × 81 indicators after pivoting and cleaning
+- **Raw Size:** 309,215 observations × 34 columns (long format)
+- **Coverage:** U.S. states and territories
+- **Selected subset:** `Crude Prevalence` data type. After heavy filtering for sparsity, pivoting, and dropping columns with 100% missing values, the final analytical dataset consists of **55 unique state/territory observations × 24 predictors**.
 
 ---
 
 ## Methodology
 
 ### 1. Data Preprocessing
-- Filtered to `Crude Prevalence` indicators for cross-state comparability
-- Reshaped from long to wide format via pivot table
-- Renamed columns with structured abbreviations (see `column_abbreviation_guide.csv`)
-- Applied **group-wise KNN imputation (k=5)** per `(yr_start, yr_end)` time window — only applied to indicators with less than 30% missing values to avoid unreliable imputation; higher-missingness indicators were left as-is
-- Applied Z-score normalization via `StandardScaler`
+- Filtered to `Crude Prevalence` indicators for cross-state comparability.
+- Reshaped from long to wide format via pivot table.
+- Applied **KNN Imputation** to preserve the variation and correlation structures between similar states.
+- Applied Z-score normalization via `StandardScaler` so features are equally weighted for distance-based algorithms.
 
-### 2. Aggregation Strategy
-Two parallel analytical views were constructed after imputation:
+### 2. Target Variable Engineering
+- Constructed a **composite chronic disease burden score** by summing the normalized indicator values per state.
+- Applied percentile thresholds to assign 3 ordinal risk classes:
+  - **Low Risk (0):** Score < 25th percentile
+  - **Moderate Risk (1):** 25th percentile ≤ Score < 75th percentile
+  - **High Risk (2):** Score ≥ 75th percentile
 
-| View | Description |
-|------|-------------|
-| **Year-specific** | Analysis performed separately per `(yr_start, yr_end)` group, preserving temporal structure |
-| **Aggregated (all-time)** | State-level averages across all time windows for a global view; light mean imputation applied post-aggregation for any remaining missingness |
-
-### 3. Target Variable Engineering
-- Constructed a **composite chronic disease burden score** by averaging normalized indicator values per observation
-- Applied a **75th percentile threshold** to assign binary labels: `1 = High-Risk`, `0 = Low-Risk`
-- Result: 119 high-risk and 357 low-risk observations
-
-### 4. Supervised Classification
-Four models were trained and evaluated using stratified 5-fold cross-validation and an 80/20 stratified train-test split:
+### 3. Supervised Classification
+Models were trained to predict the 3-tier risk categories. Due to the small sample size (n=55) and class imbalance, a **stratified 5-fold cross-validation** was utilized.
 
 | Model | Notes |
 |-------|-------|
 | Logistic Regression | L2 regularization, interpretable baseline |
-| Random Forest | Bagging ensemble, tuned via RandomizedSearchCV |
+| Random Forest | Bagging ensemble (200 estimators), tuned via RandomizedSearchCV |
 | AdaBoost | Sequential boosting of weak learners |
 | XGBoost | Gradient boosting with regularization, tuned via GridSearchCV |
 
 **Evaluation metrics:** Accuracy, Precision, Recall, F1-Score, ROC-AUC
 
-### 5. Unsupervised Clustering
-K-Means and DBSCAN were applied under both analytical views:
+### 4. Unsupervised Clustering
+K-Means and DBSCAN were applied to identify natural geographic health groupings independently of the assigned risk labels:
 
-**Year-specific clustering** — run independently per time window:
-- PCA dimensionality reduction per group (after dropping remaining NaNs)
-- K-Means with elbow method and silhouette-based k selection
-- DBSCAN with grid search over epsilon and min_samples
-
-**Aggregated clustering** — run on the all-time state-level dataset:
-- PCA on the aggregated feature matrix
-- K-Means with option for manual k override (auto-selection sometimes favored large k due to marginal silhouette differences)
-- DBSCAN with parameter sweep
+- **PCA dimensionality reduction** for 2D spatial visualization.
+- **K-Means:** Optimal number of clusters determined via the Elbow Method and Silhouette Analysis (optimal k=3).
+- **DBSCAN:** Grid search over epsilon and min_samples to account for varying densities.
 
 **Internal validation metrics:** Silhouette Score, Davies-Bouldin Index  
 **Visualization:** PCA 2D projection with ground truth risk label comparison panel  
@@ -83,8 +70,8 @@ K-Means and DBSCAN were applied under both analytical views:
 ---
 
 ## Repository Structure
-```
-├── CS5831_FinalProject .ipynb          # Main analysis notebook
+```text
+├── CS5831_FinalProject.ipynb           # Main analysis notebook
 ├── column_abbreviation_guide.csv       # Mapping of abbreviated to original column names
 ├── pivoted_df2.csv                     # Pivoted Crude Prevalence dataset
 ├── clean_df.csv                        # KNN-imputed cleaned dataset
